@@ -52,13 +52,13 @@ import Container from './Container.astro';
               class="w-10 h-10 rounded-full bg-gray-800 hover:bg-brand-600 flex items-center justify-center text-gray-400 hover:text-white transition-colors"
               aria-label={`Follow us on ${link.name}`}
             >
-              <Fragment set:html={link.icon} />
+              <i class={link.iconClass} aria-hidden="true"></i>
             </a>
           ))}
         </div>
         <p class="text-sm text-gray-400">
-          <a href="mailto:hello@herbalshifa.com" class="hover:text-white transition-colors">
-            hello@herbalshifa.com
+          <a href="mailto:HerbalShifaCompany@gmail.com" class="hover:text-white transition-colors">
+            HerbalShifaCompany@gmail.com
           </a>
         </p>
       </div>

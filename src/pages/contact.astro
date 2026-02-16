@@ -58,8 +58,8 @@ const faqs = [
               </svg>
             </div>
             <h3 class="font-semibold text-gray-900 mb-1">Email Us</h3>
-            <a href="mailto:hello@herbalshifa.com" class="text-brand-600 hover:text-brand-700 transition-colors">
-              hello@herbalshifa.com
+            <a href="mailto:HerbalShifaCompany@gmail.com" class="text-brand-600 hover:text-brand-700 transition-colors">
+              HerbalShifaCompany@gmail.com
             </a>
           </div>
 
@@ -89,7 +89,7 @@ const faqs = [
                 class="w-12 h-12 rounded-full bg-gray-100 hover:bg-brand-600 flex items-center justify-center text-gray-500 hover:text-white transition-all duration-200"
                 aria-label={`Follow us on ${link.name}`}
               >
-                <Fragment set:html={link.icon} />
+                <i class={link.iconClass} aria-hidden="true"></i>
               </a>
             ))}
           </div>

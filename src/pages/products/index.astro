@@ -1,0 +1,47 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Container from '../../components/layout/Container.astro';
+import Breadcrumbs from '../../components/seo/Breadcrumbs.astro';
+import SectionHeading from '../../components/ui/SectionHeading.astro';
+import ProductGrid from '../../components/products/ProductGrid.astro';
+import { products } from '../../data/products';
+
+const sortedProducts = [...products].sort((a, b) => a.order - b.order);
+---
+
+<BaseLayout
+  title="Natural Skincare Products"
+  description="Explore our collection of handmade, Halal-certified natural skincare products. Organic healing balm, skin cream, lotion bars, lip balm, and chemical-free deodorant."
+>
+  <section class="pt-8 pb-20 md:pt-12 md:pb-28">
+    <Container>
+      <Breadcrumbs items={[{ label: 'Products' }]} />
+
+      <SectionHeading
+        title="Our Products"
+        subtitle="Each product is handcrafted in small batches using only the finest organic ingredients. No chemicals, no fillers, no compromises."
+      />
+
+      <ProductGrid products={sortedProducts} />
+
+      <!-- Why Choose Natural -->
+      <div class="mt-20 md:mt-28 p-8 md:p-12 rounded-2xl bg-sage-50 border border-sage-100">
+        <div class="max-w-3xl mx-auto text-center">
+          <h2 class="font-heading text-2xl md:text-3xl font-bold text-gray-900 mb-4">
+            Why Choose Natural?
+          </h2>
+          <p class="text-gray-600 leading-relaxed mb-6">
+            Many conventional skincare products are filled with preservatives, emulsifiers, and unnecessary chemicals. Our products are made with pure natural oils, butters, and waxes — nothing extra. Since they are water-free and concentrated, they provide deep nourishment and long-lasting moisture without fillers.
+          </p>
+          <div class="flex flex-wrap justify-center gap-4 text-sm">
+            <span class="px-4 py-2 bg-white rounded-full text-sage-700 border border-sage-200">No Parabens</span>
+            <span class="px-4 py-2 bg-white rounded-full text-sage-700 border border-sage-200">No Petroleum</span>
+            <span class="px-4 py-2 bg-white rounded-full text-sage-700 border border-sage-200">No Synthetic Fragrances</span>
+            <span class="px-4 py-2 bg-white rounded-full text-sage-700 border border-sage-200">No Preservatives</span>
+            <span class="px-4 py-2 bg-white rounded-full text-sage-700 border border-sage-200">No Artificial Colors</span>
+          </div>
+        </div>
+      </div>
+    </Container>
+  </section>
+</BaseLayout>

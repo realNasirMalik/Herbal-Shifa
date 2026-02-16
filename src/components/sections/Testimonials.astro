@@ -1,0 +1,57 @@
+---
+import Container from '../layout/Container.astro';
+import SectionHeading from '../ui/SectionHeading.astro';
+
+const testimonials = [
+  {
+    name: 'Aisha M.',
+    text: 'I have been looking for Halal skincare products for so long. The Healing Balm is incredible — my skin has never felt better, and I love knowing exactly what is in every product.',
+    product: 'Organic Healing Balm',
+  },
+  {
+    name: 'Sarah K.',
+    text: 'The lotion bars are a game-changer! They last forever, smell amazing, and my dry skin has completely transformed. Plus, the rose gold tin is so cute.',
+    product: 'Moisturizing Lotion Bars',
+  },
+  {
+    name: 'Fatima R.',
+    text: 'Finally, a lip balm that actually hydrates without any nasty chemicals. The Acai Blackberry flavor is divine, and I feel good knowing it is all natural.',
+    product: 'Natural Lip Balm',
+  },
+];
+---
+
+<section class="py-20 md:py-28 bg-gray-50">
+  <Container>
+    <SectionHeading
+      title="What Our Customers Say"
+      subtitle="Real experiences from people who have made the switch to natural skincare."
+    />
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+      {testimonials.map((testimonial) => (
+        <div class="bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-gray-100">
+          <div class="flex gap-1 mb-4">
+            {Array.from({ length: 5 }).map(() => (
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" class="text-amber-400">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+              </svg>
+            ))}
+          </div>
+          <blockquote class="text-gray-600 text-sm leading-relaxed mb-6">
+            &ldquo;{testimonial.text}&rdquo;
+          </blockquote>
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-brand-100 flex items-center justify-center">
+              <span class="text-sm font-semibold text-brand-700">{testimonial.name.charAt(0)}</span>
+            </div>
+            <div>
+              <p class="text-sm font-semibold text-gray-900">{testimonial.name}</p>
+              <p class="text-xs text-gray-500">Verified Buyer &middot; {testimonial.product}</p>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </Container>
+</section>

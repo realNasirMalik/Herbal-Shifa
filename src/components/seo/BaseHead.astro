@@ -1,0 +1,60 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  image?: string;
+  type?: string;
+}
+
+const {
+  title,
+  description,
+  image = '/og-image.jpg',
+  type = 'website',
+} = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const imageURL = new URL(image, Astro.site);
+---
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="generator" content={Astro.generator} />
+
+<title>{title}</title>
+<meta name="description" content={description} />
+<meta name="keywords" content="Natural Skin Care, Halal Skincare, Chemical Free, Essential Oil, Handmade, Herbal, Oklahoma, Organic" />
+<link rel="canonical" href={canonicalURL} />
+
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+<meta property="og:type" content={type} />
+<meta property="og:url" content={canonicalURL} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={imageURL} />
+<meta property="og:locale" content="en_US" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={imageURL} />
+
+<script type="application/ld+json" set:html={JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Herbal Shifa Co.",
+  "url": Astro.site?.toString(),
+  "description": "Handmade natural and herbal skincare products. Halal, chemical-free, made with essential oils in Oklahoma.",
+  "address": {
+    "@type": "PostalAddress",
+    "addressRegion": "OK",
+    "addressCountry": "US"
+  },
+  "sameAs": [
+    "https://instagram.com/herbalshifaco",
+    "https://tiktok.com/@herbalshifaco",
+    "https://facebook.com/herbalshifaco",
+    "https://snapchat.com/add/herbalshifaco"
+  ]
+})} />

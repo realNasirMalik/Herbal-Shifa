@@ -1,0 +1,30 @@
+---
+import Container from '../layout/Container.astro';
+import Button from '../ui/Button.astro';
+---
+
+<section class="py-20 md:py-28 bg-gradient-to-br from-brand-800 to-brand-900 text-white relative overflow-hidden">
+  <div class="absolute inset-0 opacity-10">
+    <div class="absolute -top-20 -right-20 w-80 h-80 rounded-full bg-brand-400 blur-3xl"></div>
+    <div class="absolute -bottom-20 -left-20 w-80 h-80 rounded-full bg-sage-400 blur-3xl"></div>
+  </div>
+
+  <Container class="relative">
+    <div class="text-center max-w-2xl mx-auto">
+      <h2 class="font-heading text-3xl md:text-4xl font-bold mb-6">
+        Ready to Switch to Natural Skincare?
+      </h2>
+      <p class="text-brand-200 text-lg leading-relaxed mb-10">
+        Experience the difference that pure, handmade, Halal-certified products can make. Your skin deserves the best nature has to offer.
+      </p>
+      <div class="flex flex-col sm:flex-row justify-center gap-4">
+        <Button href="/products" size="lg" class="bg-white text-brand-900 hover:bg-brand-50">
+          Shop Our Products
+        </Button>
+        <Button href="/contact" variant="outline" size="lg" class="border-white/30 text-white hover:bg-white/10">
+          Get in Touch
+        </Button>
+      </div>
+    </div>
+  </Container>
+</section>

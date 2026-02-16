@@ -1,0 +1,155 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Container from '../components/layout/Container.astro';
+import Breadcrumbs from '../components/seo/Breadcrumbs.astro';
+import SectionHeading from '../components/ui/SectionHeading.astro';
+import Button from '../components/ui/Button.astro';
+import { brandValues } from '../data/brand-values';
+
+const processSteps = [
+  {
+    step: '01',
+    title: 'Source',
+    description: 'We carefully select the finest organic ingredients from trusted suppliers.',
+  },
+  {
+    step: '02',
+    title: 'Handcraft',
+    description: 'Each product is handmade in small batches with attention to every detail.',
+  },
+  {
+    step: '03',
+    title: 'Quality Check',
+    description: 'Every batch is tested to ensure purity, safety, and effectiveness.',
+  },
+  {
+    step: '04',
+    title: 'Deliver',
+    description: 'Products are carefully packaged and delivered to your doorstep.',
+  },
+];
+---
+
+<BaseLayout
+  title="Our Story"
+  description="Learn about Herbal Shifa Co., our mission, and our commitment to natural, Halal, chemical-free skincare handmade in Oklahoma."
+>
+  <!-- Page Header -->
+  <section class="pt-8 pb-16 md:pt-12 md:pb-24">
+    <Container>
+      <Breadcrumbs items={[{ label: 'About' }]} />
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+        <!-- Founder Image Placeholder -->
+        <div class="aspect-[4/3] rounded-2xl bg-gradient-to-br from-brand-100 via-sage-100 to-brand-50 flex items-center justify-center order-2 lg:order-1">
+          <div class="text-center p-8">
+            <div class="w-24 h-24 rounded-full bg-white/80 flex items-center justify-center mx-auto mb-4">
+              <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-brand-700">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                <circle cx="12" cy="7" r="4"/>
+              </svg>
+            </div>
+            <p class="text-sm text-brand-700 font-medium">Founder Photo</p>
+            <p class="text-xs text-gray-400 mt-1">Replace with actual image</p>
+          </div>
+        </div>
+
+        <!-- Founder Story -->
+        <div class="order-1 lg:order-2">
+          <p class="text-sm font-semibold text-brand-600 uppercase tracking-wider mb-3">Our Story</p>
+          <h1 class="font-heading text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
+            Your Trusted Partner in Natural Wellness
+          </h1>
+          <p class="text-gray-600 leading-relaxed mb-4">
+            Herbal Shifa Co. was founded with a simple yet powerful mission: to provide high-quality, handmade herbal products that nourish your body and soul. We believe that skincare should be pure, honest, and rooted in the wisdom of nature.
+          </p>
+          <p class="text-gray-600 leading-relaxed mb-4">
+            From soothing therapeutic soaps to rejuvenating skincare, our products are infused with the goodness of nature. We formulate and sell high-quality, organic products made with love and care, free from harsh chemicals, parabens, and artificial fragrances.
+          </p>
+          <p class="text-gray-600 leading-relaxed">
+            Based in Oklahoma, every product is handcrafted in small batches to ensure the highest quality. Our commitment to Halal standards means you can trust that every ingredient meets the strictest purity requirements.
+          </p>
+        </div>
+      </div>
+    </Container>
+  </section>
+
+  <!-- Mission Statement -->
+  <section class="py-16 md:py-20 bg-brand-900 text-white">
+    <Container>
+      <div class="max-w-3xl mx-auto text-center">
+        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="currentColor" class="text-brand-400 mx-auto mb-6 opacity-50">
+          <path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V21z"/>
+          <path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z"/>
+        </svg>
+        <blockquote class="font-heading text-2xl md:text-3xl font-bold leading-relaxed mb-6">
+          Experience the power of herbal remedies and embrace a healthier lifestyle with us. Every product we create is a blessing in a jar.
+        </blockquote>
+        <p class="text-brand-300 text-sm uppercase tracking-wider">Founder, Herbal Shifa Co.</p>
+      </div>
+    </Container>
+  </section>
+
+  <!-- Brand Values Grid -->
+  <section class="py-20 md:py-28">
+    <Container>
+      <SectionHeading
+        title="What Sets Us Apart"
+        subtitle="Every product we create is guided by these core values."
+      />
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+        {brandValues.map((value) => (
+          <div class="p-6 md:p-8 rounded-2xl bg-gray-50 border border-gray-100">
+            <div class="w-12 h-12 rounded-xl bg-brand-100 flex items-center justify-center text-brand-700 mb-4">
+              <Fragment set:html={value.icon} />
+            </div>
+            <h3 class="font-heading text-lg font-bold text-gray-900 mb-2">{value.title}</h3>
+            <p class="text-sm text-gray-600 leading-relaxed">{value.description}</p>
+          </div>
+        ))}
+      </div>
+    </Container>
+  </section>
+
+  <!-- Our Process -->
+  <section class="py-20 md:py-28 bg-sage-50">
+    <Container>
+      <SectionHeading
+        title="Our Process"
+        subtitle="From sourcing the finest ingredients to delivering to your door — every step is done with intention."
+      />
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        {processSteps.map((item) => (
+          <div class="text-center">
+            <div class="text-4xl font-heading font-bold text-brand-200 mb-4">{item.step}</div>
+            <h3 class="font-heading text-xl font-bold text-gray-900 mb-2">{item.title}</h3>
+            <p class="text-sm text-gray-600 leading-relaxed">{item.description}</p>
+          </div>
+        ))}
+      </div>
+    </Container>
+  </section>
+
+  <!-- CTA -->
+  <section class="py-20 md:py-28">
+    <Container>
+      <div class="text-center max-w-2xl mx-auto">
+        <h2 class="font-heading text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+          Ready to Experience Natural Skincare?
+        </h2>
+        <p class="text-gray-600 text-lg leading-relaxed mb-10">
+          Explore our collection of handmade, Halal-certified products and find the perfect fit for your skincare routine.
+        </p>
+        <Button href="/products" size="lg">
+          Browse Our Products
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2">
+            <path d="M5 12h14"/>
+            <path d="m12 5 7 7-7 7"/>
+          </svg>
+        </Button>
+      </div>
+    </Container>
+  </section>
+</BaseLayout>

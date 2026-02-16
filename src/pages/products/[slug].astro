@@ -1,0 +1,217 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Container from '../../components/layout/Container.astro';
+import Breadcrumbs from '../../components/seo/Breadcrumbs.astro';
+import Badge from '../../components/ui/Badge.astro';
+import Button from '../../components/ui/Button.astro';
+import IngredientList from '../../components/products/IngredientList.astro';
+import ProductCard from '../../components/products/ProductCard.astro';
+import { products, getProductBySlug } from '../../data/products';
+
+export function getStaticPaths() {
+  return products.map((product) => ({
+    params: { slug: product.slug },
+  }));
+}
+
+const { slug } = Astro.params;
+const product = getProductBySlug(slug as string);
+
+if (!product) {
+  return Astro.redirect('/404');
+}
+
+const relatedProducts = products
+  .filter((p) => p.slug !== product.slug)
+  .slice(0, 3);
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Product',
+  name: product.name,
+  description: product.description,
+  brand: {
+    '@type': 'Brand',
+    name: 'Herbal Shifa Co.',
+  },
+  offers: {
+    '@type': 'Offer',
+    availability: 'https://schema.org/InStock',
+    priceCurrency: 'USD',
+    seller: {
+      '@type': 'Organization',
+      name: 'Herbal Shifa Co.',
+    },
+  },
+  additionalProperty: product.badges.map((badge) => ({
+    '@type': 'PropertyValue',
+    name: 'Certification',
+    value: badge,
+  })),
+};
+---
+
+<BaseLayout
+  title={product.name}
+  description={product.description}
+>
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+
+  <section class="pt-8 pb-20 md:pt-12 md:pb-28">
+    <Container>
+      <Breadcrumbs items={[
+        { label: 'Products', href: '/products' },
+        { label: product.name },
+      ]} />
+
+      <!-- Product Hero -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 mb-16">
+        <!-- Product Image Placeholder -->
+        <div class:list={['aspect-square rounded-2xl bg-gradient-to-br flex items-center justify-center', product.gradient]}>
+          <span class="text-8xl md:text-9xl opacity-80">{product.iconEmoji}</span>
+        </div>
+
+        <!-- Product Info -->
+        <div class="flex flex-col justify-center">
+          <div class="flex flex-wrap gap-2 mb-4">
+            {product.badges.map((badge) => (
+              <Badge variant="blue">{badge}</Badge>
+            ))}
+          </div>
+
+          <h1 class="font-heading text-3xl md:text-4xl font-bold text-gray-900 mb-3">
+            {product.name}
+          </h1>
+
+          <p class="text-lg text-gray-500 mb-6">{product.tagline}</p>
+
+          {product.price && (
+            <p class="text-2xl font-bold text-brand-700 mb-6">
+              {product.price}
+            </p>
+          )}
+
+          {product.netWeight && (
+            <p class="text-sm text-gray-500 mb-4">
+              Net Weight: {product.netWeight}
+            </p>
+          )}
+
+          <p class="text-gray-600 leading-relaxed mb-8">
+            {product.description}
+          </p>
+
+          <div class="flex flex-col sm:flex-row gap-3">
+            <Button href="/contact" size="lg">
+              Inquire About This Product
+            </Button>
+            <Button href="/products" variant="outline" size="lg">
+              View All Products
+            </Button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Product Details Grid -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12 mb-16">
+        <!-- Full Description -->
+        <div class="lg:col-span-2">
+          <h2 class="font-heading text-2xl font-bold text-gray-900 mb-4">About This Product</h2>
+          <div class="text-gray-600 leading-relaxed space-y-4">
+            {product.longDescription.split('\n\n').map((paragraph) => (
+              <p>{paragraph}</p>
+            ))}
+          </div>
+
+          <!-- Benefits -->
+          <h3 class="font-heading text-xl font-bold text-gray-900 mt-8 mb-4">Benefits</h3>
+          <ul class="space-y-3">
+            {product.benefits.map((benefit) => (
+              <li class="flex items-start gap-3">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-sage-500 shrink-0 mt-0.5">
+                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                  <polyline points="22 4 12 14.01 9 11.01"/>
+                </svg>
+                <span class="text-gray-600">{benefit}</span>
+              </li>
+            ))}
+          </ul>
+
+          <!-- Usage -->
+          <h3 class="font-heading text-xl font-bold text-gray-900 mt-8 mb-4">How to Use</h3>
+          <p class="text-gray-600 leading-relaxed">{product.usage}</p>
+
+          <!-- Best For -->
+          <h3 class="font-heading text-xl font-bold text-gray-900 mt-8 mb-4">Perfect For</h3>
+          <div class="flex flex-wrap gap-2">
+            {product.targetAudience.map((audience) => (
+              <span class="px-3 py-1.5 text-sm bg-brand-50 text-brand-700 rounded-full">{audience}</span>
+            ))}
+          </div>
+        </div>
+
+        <!-- Sidebar: Ingredients -->
+        <div>
+          <div class="sticky top-24 bg-gray-50 rounded-2xl p-6">
+            <h3 class="font-heading text-lg font-bold text-gray-900 mb-4">Ingredients</h3>
+            <IngredientList ingredients={product.ingredients} />
+
+            <div class="mt-6 pt-6 border-t border-gray-200">
+              <div class="flex items-center gap-2 text-sm text-sage-600 mb-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                  <path d="m9 12 2 2 4-4"/>
+                </svg>
+                Halal Certified
+              </div>
+              <div class="flex items-center gap-2 text-sm text-sage-600 mb-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M11 20A7 7 0 0 1 9.8 6.9C15.5 4.9 17 3.5 17 3.5s1 2 2.5 3.5S22 9 22 9s-1.5 1.5-3.5 2.5S15.1 14.2 11 20z"/>
+                  <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/>
+                </svg>
+                100% Natural
+              </div>
+              <div class="flex items-center gap-2 text-sm text-sage-600">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>
+                </svg>
+                Handmade in Oklahoma
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Warning -->
+      {product.warning && (
+        <div class="mb-16 p-6 rounded-2xl bg-amber-50 border border-amber-200">
+          <div class="flex items-start gap-3">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-amber-600 shrink-0 mt-0.5">
+              <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/>
+              <path d="M12 9v4"/>
+              <path d="M12 17h.01"/>
+            </svg>
+            <div>
+              <p class="text-sm font-semibold text-amber-800 mb-1">Important Notice</p>
+              <p class="text-sm text-amber-700 leading-relaxed">{product.warning}</p>
+            </div>
+          </div>
+        </div>
+      )}
+
+      <!-- Related Products -->
+      {relatedProducts.length > 0 && (
+        <div>
+          <h2 class="font-heading text-2xl md:text-3xl font-bold text-gray-900 mb-8 text-center">
+            You Might Also Like
+          </h2>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+            {relatedProducts.map((related) => (
+              <ProductCard product={related} />
+            ))}
+          </div>
+        </div>
+      )}
+    </Container>
+  </section>
+</BaseLayout>

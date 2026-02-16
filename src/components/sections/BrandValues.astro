@@ -1,0 +1,20 @@
+---
+import Container from '../layout/Container.astro';
+import { brandValues } from '../../data/brand-values';
+---
+
+<section class="py-16 md:py-20 bg-sage-50">
+  <Container>
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+      {brandValues.map((value) => (
+        <div class="flex flex-col items-center text-center p-4">
+          <div class="w-12 h-12 rounded-full bg-white shadow-sm flex items-center justify-center text-brand-700 mb-3">
+            <Fragment set:html={value.icon} />
+          </div>
+          <h3 class="text-sm font-semibold text-gray-900 mb-1">{value.title}</h3>
+          <p class="text-xs text-gray-500 leading-relaxed hidden md:block">{value.description}</p>
+        </div>
+      ))}
+    </div>
+  </Container>
+</section>

@@ -1,0 +1,37 @@
+---
+import Badge from '../ui/Badge.astro';
+import type { Product } from '../../data/products';
+
+interface Props {
+  product: Product;
+}
+
+const { product } = Astro.props;
+---
+
+<article class="group rounded-2xl overflow-hidden bg-white border border-gray-100 shadow-sm hover:shadow-lg transition-all duration-300">
+  <a href={`/products/${product.slug}`} class="block" aria-label={`View ${product.name} details`}>
+    <!-- Placeholder Image -->
+    <div class:list={['aspect-square bg-gradient-to-br flex items-center justify-center relative overflow-hidden', product.gradient]}>
+      <span class="text-6xl opacity-80 group-hover:scale-110 transition-transform duration-500">{product.iconEmoji}</span>
+      <div class="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors duration-300"></div>
+    </div>
+
+    <div class="p-5">
+      <div class="flex flex-wrap gap-1.5 mb-3">
+        {product.badges.slice(0, 3).map((badge) => (
+          <Badge variant="blue">{badge}</Badge>
+        ))}
+      </div>
+      <h3 class="font-heading text-lg font-bold text-gray-900 mb-1.5 group-hover:text-brand-700 transition-colors">
+        {product.name}
+      </h3>
+      <p class="text-sm text-gray-600 leading-relaxed line-clamp-2">
+        {product.tagline}
+      </p>
+      {product.price && product.price !== 'Contact for pricing' && (
+        <p class="mt-3 text-base font-semibold text-brand-700">{product.price}</p>
+      )}
+    </div>
+  </a>
+</article>
